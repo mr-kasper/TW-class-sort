@@ -2,7 +2,7 @@
   "name": "tw-class-sort-prettier",
   "displayName": "TW Class Sort (Prettier)",
   "description": "Sort Tailwind CSS classes in recommended order using prettier-plugin-tailwindcss",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "mr-kasper",
   "license": "MIT",
   "icon": "icon.png",
