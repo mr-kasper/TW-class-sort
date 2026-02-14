@@ -6,6 +6,18 @@
   "publisher": "mr-kasper",
   "license": "MIT",
   "icon": "icon.png",
+  "author": {
+    "name": "mr-kasper",
+    "url": "https://github.com/mr-kasper"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mr-kasper/TW-class-sort"
+  },
+  "homepage": "https://github.com/mr-kasper/TW-class-sort#readme",
+  "bugs": {
+    "url": "https://github.com/mr-kasper/TW-class-sort/issues"
+  },
   "galleryBanner": {
     "color": "#0F172A",
     "theme": "dark"
