@@ -1,0 +1,108 @@
+{
+  "name": "tw-class-sort-prettier",
+  "displayName": "TW Class Sort (Prettier)",
+  "description": "Sort Tailwind CSS classes in recommended order using prettier-plugin-tailwindcss",
+  "version": "0.0.1",
+  "publisher": "mr-kasper",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#0F172A",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "keywords": [
+    "tailwind",
+    "tailwindcss",
+    "css",
+    "sort",
+    "prettier",
+    "formatter"
+  ],
+  "activationEvents": [
+    "onLanguage:html",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:vue",
+    "onLanguage:svelte",
+    "onLanguage:astro",
+    "onLanguage:php",
+    "onLanguage:javascript",
+    "onLanguage:typescript"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tailwindClassSorter.sortClasses",
+        "title": "Sort Tailwind CSS Classes"
+      }
+    ],
+    "configuration": {
+      "title": "Tailwind CSS Class Sorter",
+      "properties": {
+        "tailwindClassSorter.formatOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically sort Tailwind CSS classes on file save."
+        },
+        "tailwindClassSorter.tailwindStylesheet": {
+          "type": "string",
+          "default": "",
+          "description": "(Tailwind v4) Path to your Tailwind CSS entry point stylesheet (e.g. ./src/app.css). Leave empty for auto-detection."
+        },
+        "tailwindClassSorter.tailwindConfigPath": {
+          "type": "string",
+          "default": "",
+          "description": "(Tailwind v3) Path to tailwind.config.js (relative to workspace root). Leave empty for auto-detection."
+        },
+        "tailwindClassSorter.tailwindFunctions": {
+          "type": "array",
+          "default": [
+            "clsx",
+            "cn",
+            "cva",
+            "tw"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of function names whose arguments should have their Tailwind classes sorted."
+        },
+        "tailwindClassSorter.tailwindAttributes": {
+          "type": "array",
+          "default": [
+            "class",
+            "className"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of HTML/JSX attributes whose values should have their Tailwind classes sorted."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --minify",
+    "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --watch",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "prettier": "^3.2.0",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}
