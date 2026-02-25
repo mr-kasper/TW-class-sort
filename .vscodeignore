@@ -1,11 +1,13 @@
 .vscode/**
 .vscode-test/**
 src/**
+test/**
 node_modules/**
 !node_modules/prettier/**
 !node_modules/prettier-plugin-tailwindcss/**
 .gitignore
 tsconfig.json
+vitest.config.ts
 **/*.map
 **/*.ts
 !out/**

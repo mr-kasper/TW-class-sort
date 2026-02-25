@@ -33,13 +33,15 @@ Enable automatic sorting on save in your VS Code settings:
 
 ## Extension Settings
 
-| Setting                                  | Type       | Default                       | Description                                                                                                    |
-| ---------------------------------------- | ---------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `tailwindClassSorter.formatOnSave`       | `boolean`  | `false`                       | Automatically sort Tailwind CSS classes on file save                                                           |
-| `tailwindClassSorter.tailwindStylesheet` | `string`   | `""`                          | **(Tailwind v4)** Path to your Tailwind CSS entry point (e.g. `./src/app.css`). Leave empty for auto-detection |
-| `tailwindClassSorter.tailwindConfigPath` | `string`   | `""`                          | **(Tailwind v3)** Path to `tailwind.config.js` (relative to workspace root). Leave empty for auto-detection    |
-| `tailwindClassSorter.tailwindFunctions`  | `string[]` | `["clsx", "cn", "cva", "tw"]` | Function names whose arguments should have their Tailwind classes sorted                                       |
-| `tailwindClassSorter.tailwindAttributes` | `string[]` | `["class", "className"]`      | HTML/JSX attributes whose values should have their Tailwind classes sorted                                     |
+| Setting                                          | Type       | Default                       | Description                                                                                                                     |
+| ------------------------------------------------ | ---------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `tailwindClassSorter.formatOnSave`               | `boolean`  | `false`                       | Automatically sort Tailwind CSS classes on file save                                                                            |
+| `tailwindClassSorter.tailwindStylesheet`         | `string`   | `""`                          | **(Tailwind v4)** Path to your Tailwind CSS entry point (e.g. `./src/app.css`). Leave empty for auto-detection                  |
+| `tailwindClassSorter.tailwindConfigPath`         | `string`   | `""`                          | **(Tailwind v3)** Path to `tailwind.config.js` (relative to workspace root). Leave empty for auto-detection                     |
+| `tailwindClassSorter.tailwindFunctions`          | `string[]` | `["clsx", "cn", "cva", "tw"]` | Function names whose arguments should have their Tailwind classes sorted                                                        |
+| `tailwindClassSorter.tailwindAttributes`         | `string[]` | `["class", "className"]`      | HTML/JSX attributes whose values should have their Tailwind classes sorted. Supports regex patterns enclosed in forward slashes |
+| `tailwindClassSorter.tailwindPreserveWhitespace` | `boolean`  | `false`                       | Preserve extra whitespace between classes instead of collapsing it                                                              |
+| `tailwindClassSorter.tailwindPreserveDuplicates` | `boolean`  | `false`                       | Preserve duplicate classes instead of removing them. Useful for Blade or Fluid templating                                       |
 
 ## Example
 

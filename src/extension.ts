@@ -4,6 +4,9 @@ import { sortTailwindClasses } from './sorter';
 let formatOnSaveDisposable: vscode.Disposable | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
+  const outputChannel = vscode.window.createOutputChannel('TW Class Sort');
+  outputChannel.appendLine('Extension activating...');
+
   // Register the sort command
   const sortCommand = vscode.commands.registerCommand(
     'tailwindClassSorter.sortClasses',

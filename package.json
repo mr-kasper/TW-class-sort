@@ -2,7 +2,7 @@
   "name": "tw-class-sort-prettier",
   "displayName": "TW Class Sort (Prettier)",
   "description": "Sort Tailwind CSS classes in recommended order using prettier-plugin-tailwindcss",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "mr-kasper",
   "license": "MIT",
   "icon": "icon.png",
@@ -37,6 +37,7 @@
     "formatter"
   ],
   "activationEvents": [
+    "onCommand:tailwindClassSorter.sortClasses",
     "onLanguage:html",
     "onLanguage:javascriptreact",
     "onLanguage:typescriptreact",
@@ -113,7 +114,8 @@
   "scripts": {
     "vscode:prepublish": "npm run build",
     "build": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --minify",
-    "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --watch",
+    "build:dev": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --sourcemap",
+    "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --sourcemap --watch",
     "compile": "tsc -p ./",
     "lint": "eslint src --ext ts",
     "test": "vitest run"
