@@ -5,7 +5,7 @@ import * as fs from 'fs';
 /**
  * Maps VS Code language IDs to Prettier parser names.
  */
-function getPrettierParser(languageId: string): string {
+export function getPrettierParser(languageId: string): string {
   const parserMap: Record<string, string> = {
     html: 'html',
     javascript: 'babel',
@@ -24,7 +24,7 @@ function getPrettierParser(languageId: string): string {
 /**
  * Tries to detect the tab width used in a source file by looking at indentation.
  */
-function detectTabWidth(text: string): number | undefined {
+export function detectTabWidth(text: string): number | undefined {
   const lines = text.split('\n');
   const indentCounts: Record<number, number> = {};
 
@@ -71,6 +71,8 @@ export async function sortTailwindClasses(
   const tailwindAttributes = config.get<string[]>('tailwindAttributes', ['class', 'className']);
   const tailwindConfigPath = config.get<string>('tailwindConfigPath', '');
   const tailwindStylesheet = config.get<string>('tailwindStylesheet', '');
+  const tailwindPreserveWhitespace = config.get<boolean>('tailwindPreserveWhitespace', false);
+  const tailwindPreserveDuplicates = config.get<boolean>('tailwindPreserveDuplicates', false);
 
   const workspaceFolder = vscode.workspace.getWorkspaceFolder(fileUri);
   const workspaceRoot = workspaceFolder?.uri.fsPath || path.dirname(fileUri.fsPath);
@@ -109,6 +111,8 @@ export async function sortTailwindClasses(
     plugins: [tailwindPlugin.default ?? tailwindPlugin],
     tailwindFunctions,
     tailwindAttributes,
+    tailwindPreserveWhitespace,
+    tailwindPreserveDuplicates,
 
     // If no user config, infer from file
     tabWidth,

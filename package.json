@@ -84,7 +84,7 @@
           "items": {
             "type": "string"
           },
-          "description": "List of function names whose arguments should have their Tailwind classes sorted."
+          "description": "List of function names whose arguments should have their Tailwind classes sorted. Supports regex patterns enclosed in forward slashes (e.g. \"/^tw$/\")."
         },
         "tailwindClassSorter.tailwindAttributes": {
           "type": "array",
@@ -95,7 +95,17 @@
           "items": {
             "type": "string"
           },
-          "description": "List of HTML/JSX attributes whose values should have their Tailwind classes sorted."
+          "description": "List of HTML/JSX attributes whose values should have their Tailwind classes sorted. Supports regex patterns enclosed in forward slashes (e.g. \"/data-.*/\")."
+        },
+        "tailwindClassSorter.tailwindPreserveWhitespace": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve extra whitespace between classes instead of collapsing it."
+        },
+        "tailwindClassSorter.tailwindPreserveDuplicates": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve duplicate classes instead of removing them. Useful for templating languages like Blade or Fluid."
         }
       }
     }
@@ -105,16 +115,18 @@
     "build": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --minify",
     "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:prettier --external:prettier-plugin-tailwindcss --format=cjs --platform=node --watch",
     "compile": "tsc -p ./",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts",
+    "test": "vitest run"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^22.0.0",
     "@types/vscode": "^1.85.0",
     "esbuild": "^0.27.3",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.1"
   },
   "dependencies": {
-    "prettier": "^3.2.0",
-    "prettier-plugin-tailwindcss": "^0.6.11"
+    "prettier": "^3.8.0",
+    "prettier-plugin-tailwindcss": "^0.7.2"
   }
 }
