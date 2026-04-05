@@ -2,6 +2,13 @@ import * as vscode from 'vscode';
 import { sortTailwindClasses } from './sorter';
 
 let formatOnSaveDisposable: vscode.Disposable | undefined;
+let scrollRestoreDisposable: vscode.Disposable | undefined;
+
+type ScrollRestoreState = {
+  topVisibleLine: number;
+};
+
+const pendingScrollRestores = new Map<string, ScrollRestoreState>();
 
 export function activate(context: vscode.ExtensionContext) {
   const outputChannel = vscode.window.createOutputChannel('TW Class Sort');
@@ -38,6 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Set up format on save if enabled
   setupFormatOnSave(context);
+  setupScrollRestoration(context);
 
   // Listen for configuration changes
   const configWatcher = vscode.workspace.onDidChangeConfiguration((e) => {
@@ -77,11 +85,76 @@ function setupFormatOnSave(context: vscode.ExtensionContext) {
         return;
       }
 
-      event.waitUntil(getSortEdits(event.document));
+      const scrollState = captureScrollState(event.document);
+
+      event.waitUntil(
+        getSortEdits(event.document).then((edits) => {
+          if (edits.length > 0 && scrollState) {
+            pendingScrollRestores.set(event.document.uri.toString(), scrollState);
+          }
+
+          return edits;
+        }),
+      );
     });
 
     context.subscriptions.push(formatOnSaveDisposable);
   }
+}
+
+function setupScrollRestoration(context: vscode.ExtensionContext) {
+  if (scrollRestoreDisposable) {
+    return;
+  }
+
+  scrollRestoreDisposable = vscode.workspace.onDidSaveTextDocument((document) => {
+    const uriKey = document.uri.toString();
+    const scrollState = pendingScrollRestores.get(uriKey);
+
+    if (!scrollState) {
+      return;
+    }
+
+    pendingScrollRestores.delete(uriKey);
+
+    queueMicrotask(() => {
+      const editor = vscode.window.visibleTextEditors.find(
+        (candidate) => candidate.document.uri.toString() === uriKey,
+      );
+
+      if (!editor) {
+        return;
+      }
+
+      const topLine = Math.min(scrollState.topVisibleLine, Math.max(document.lineCount - 1, 0));
+      const line = document.lineAt(topLine);
+
+      editor.revealRange(
+        new vscode.Range(line.range.start, line.range.start),
+        vscode.TextEditorRevealType.AtTop,
+      );
+    });
+  });
+
+  context.subscriptions.push(scrollRestoreDisposable);
+}
+
+function captureScrollState(document: vscode.TextDocument): ScrollRestoreState | undefined {
+  const editor = vscode.window.activeTextEditor;
+
+  if (!editor || editor.document.uri.toString() !== document.uri.toString()) {
+    return undefined;
+  }
+
+  const visibleRange = editor.visibleRanges[0];
+
+  if (!visibleRange) {
+    return undefined;
+  }
+
+  return {
+    topVisibleLine: visibleRange.start.line,
+  };
 }
 
 async function getSortEdits(document: vscode.TextDocument): Promise<vscode.TextEdit[]> {
@@ -132,5 +205,9 @@ async function sortClassesInEditor(
 export function deactivate() {
   if (formatOnSaveDisposable) {
     formatOnSaveDisposable.dispose();
+  }
+
+  if (scrollRestoreDisposable) {
+    scrollRestoreDisposable.dispose();
   }
 }

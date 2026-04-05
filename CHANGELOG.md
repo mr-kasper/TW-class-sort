@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0] - 2026-04-05
+
+### Changed
+
+- Bumped the extension to the first stable release
+- Kept the format-on-save scroll-preservation fix from 0.0.4
+
 ## [0.0.4] - 2026-02-25
 
 ### Changed
@@ -13,6 +20,7 @@
 - Added `onCommand` activation event so the sort command is always available
 - Added `TW Class Sort` output channel for activation diagnostics
 - Added VS Code debug launch configurations for extension development
+- Prevented the editor from scrolling when format-on-save applies Tailwind sorting
 
 ## [0.0.2] - 2026-02-24
 
